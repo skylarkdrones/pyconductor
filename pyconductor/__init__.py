@@ -12,8 +12,8 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
-# 
-__version__ = '1.0.0'
+#
+__version__ = '0.1.2'
 VERSION = tuple(map(int, __version__.split('.')))
 
 __all__ = ['conductor','ConductorWorker']

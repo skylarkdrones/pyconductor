@@ -18,7 +18,7 @@ from setuptools import setup
 setup(
   name = 'pyconductor',
   packages = ['pyconductor'], # this must be the same as the name above
-  version = '1.0.0',
+  version = '0.1.2',
   description = 'Conductor python client',
   author = 'Samarth Hattangady',
   author_email = 'samhattangady@gmail.com',
@@ -27,17 +27,5 @@ setup(
   license = 'Apache 2.0',
   install_requires = [
     'requests',
-  ],
-  classifiers = [
-    'Intended Audience :: Developers',
-    'Intended Audience :: System Administrators',
-    'License :: OSI Approved :: Apache Software License',
-    'Programming Language :: Python :: 3.6',
-    'Topic :: Workflow',
-    'Topic :: Microservices',
-    'Topic :: Orchestration',
-    'Topic :: Internet',
-    'Topic :: Software Development :: Libraries :: Python Modules',
-    'Topic :: System :: Networking'
   ],
 )
