@@ -12,29 +12,27 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
-# 
+#
 from setuptools import setup
 
 setup(
-  name = 'conductor',
-  packages = ['conductor'], # this must be the same as the name above
+  name = 'pyconductor',
+  packages = ['pyconductor'], # this must be the same as the name above
   version = '1.0.0',
   description = 'Conductor python client',
-  author = 'Viren Baraiya',
-  author_email = 'vbaraiya@netflix.com',
-  url = 'https://github.com/netflix/conductor',
-  download_url = 'https://github.com/Netflix/conductor/releases',
-  keywords = ['conductor'],
+  author = 'Samarth Hattangady',
+  author_email = 'samhattangady@gmail.com',
+  url = 'https://github.com/skylarkdrones/pyconductor',
+  keywords = ['netflix', 'conductor', 'pyconductor'],
   license = 'Apache 2.0',
   install_requires = [
     'requests',
   ],
   classifiers = [
-    'Development Status :: 4 - Beta',
     'Intended Audience :: Developers',
     'Intended Audience :: System Administrators',
     'License :: OSI Approved :: Apache Software License',
-    'Programming Language :: Python :: 2.7',
+    'Programming Language :: Python :: 3.6',
     'Topic :: Workflow',
     'Topic :: Microservices',
     'Topic :: Orchestration',

@@ -1,34 +1,42 @@
 # Python client for Conductor
-Python clinet for Conductor provides two sets of functions:
+Python client for Conductor provides two sets of functions:
 
 1. Workflow management APIs (start, terminate, get workflow status etc.)
 2. Worker execution framework
 
+> NOTE: This repository has been forked from [Netflix:conductor](https://github.com/Netflix/conductor)'s
+> `client/python` folder. Apart from the results of renaming the module from `conductor` to `pyconductor`,
+> (as pip already contains a `conductor` module), there are no code changes. This repository is mostly meant
+> to act as an easy way to install the python client for `Netflix:conductor`. There are also attempts made
+> to add documentation to the client overall. As far as possible, the library will be kept in sync with
+> the upstream branch.
+
 ## Install
 
 ```shell
-pip install conductor
+# Not yet implemented
+pip install pyconductor
 ```
 
 ## Using Workflow Management API
-Python class ```WorkflowClient``` provides client API calls to the conductor server to start manage the workflows.  
+Python class ```WorkflowClient``` provides client API calls to the conductor server to start manage the workflows.
 
 ### Example
 
 ```python
 import sys
-from conductor import conductor
+from pyconductor import conductor
 import json
 
 def getStatus(workflowId):
-	
+
 	workflowClient = conductor.WorkflowClient('http://localhost:8080/api')
-	
+
 	workflow_json = workflowClient.getWorkflow(workflowId)
 	print json.dumps(workflow_json, indent=True, separators=(',', ': '))
-	
+
 	return workflow_json
-	
+
 ```
 
 ## Task Worker Execution
@@ -39,7 +47,7 @@ The API provides necessary mechanism to poll for task work at regular interval a
 The following python script demonstrates workers for the kitchensink workflow.
 
 ```python
-from conductor.ConductorWorker import ConductorWorker
+from pyconductor.ConductorWorker import ConductorWorker
 
 def execute(task):
 	return {'status': 'COMPLETED', 'output': {'mod': 5, 'taskToExecute': 'task_1', 'oddEven': 0}}
