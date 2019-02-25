@@ -14,7 +14,6 @@ Python client for Conductor provides two sets of functions:
 ## Install
 
 ```shell
-# Not yet implemented
 pip install pyconductor
 ```
 
@@ -50,7 +49,7 @@ The following python script demonstrates workers for the kitchensink workflow.
 from pyconductor.ConductorWorker import ConductorWorker
 
 def execute(task):
-	return {'status': 'COMPLETED', 'output': {'mod': 5, 'taskToExecute': 'task_1', 'oddEven': 0}}
+	return {'status': 'COMPLETED', 'output': {'mod': 5, 'taskToExecute': 'task_1', 'oddEven': 0}, 'logs': ['one', 'two']}
 
 def execute4(task):
 	forkTasks = [{"name": "task_1", "taskReferenceName": "task_1_1", "type": "SIMPLE"},{"name": "sub_workflow_4", "taskReferenceName": "wf_dyn", "type": "SUB_WORKFLOW", "subWorkflowParam": {"name": "sub_flow_1"}}];
