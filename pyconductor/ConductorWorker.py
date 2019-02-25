@@ -15,7 +15,7 @@
 from __future__ import print_function, absolute_import
 import sys
 import time
-from conductor.conductor import WFClientMgr
+from pyconductor.conductor import WFClientMgr
 from threading import Thread
 import socket
 
