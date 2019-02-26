@@ -23,12 +23,28 @@ hostname = socket.gethostname()
 
 
 class ConductorWorker:
+    """
+    Main class for implementing Conductor Workers
+
+    A conductor worker is a separate system that executes the various
+    tasks that the conductor server queues up for execution. The worker
+    can run on the same instance as the server or on a remote instance.
+
+    The worker generally provides a wrapper around some function that
+    performs the actual execution of the task. The function that is
+    being executed must return a `dict` with the `status`, `output` and
+    `log` keys. If these keys are not present, the worker will raise an
+    Exception after completion of the task.
+    """
     def __init__(self, server_url, thread_count=1, polling_interval=1, worker_id=None):
         wfcMgr = WFClientMgr(server_url)
         self.workflowClient = wfcMgr.workflowClient
         self.taskClient = wfcMgr.taskClient
-        self.thread_count = thread_count
-        self.polling_interval = polling_interval
+        # Checking that the arguments are valid. Converting thread_count
+        # to float as that is a little more lenient. It will be converted
+        # to int when it is being used.
+        self.thread_count = float(thread_count)
+        self.polling_interval = float(polling_interval)
         self.worker_id = worker_id or hostname
 
     def execute(self, task, exec_function):
