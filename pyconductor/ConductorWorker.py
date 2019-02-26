@@ -23,7 +23,44 @@ hostname = socket.gethostname()
 
 
 class ConductorWorker:
+    """
+    Main class for implementing Conductor Workers
+
+    A conductor worker is a separate system that executes the various
+    tasks that the conductor server queues up for execution. The worker
+    can run on the same instance as the server or on a remote instance.
+
+    The worker generally provides a wrapper around some function that
+    performs the actual execution of the task. The function that is
+    being executed must return a `dict` with the `status`, `output` and
+    `log` keys. If these keys are not present, the worker will raise an
+    Exception after completion of the task.
+
+    The start method is used to begin continous polling and execution
+    of the tasks that the conductor server makes available. The same
+    script can run multiple workers using the wait argument. For more
+    details, view the start method
+    """
     def __init__(self, server_url, thread_count, polling_interval, worker_id=None):
+        """
+        Parameters
+        ----------
+        server_url: str
+            The url to the server hosting the conductor api.
+            Ex: 'http://localhost:8080/api'
+        thread_count: int, optional
+            The number of threads that will be polling for and
+            executing tasks in case of using the start method. By
+            default, thread_count is set to 1
+        polling_interval: float, optional
+            The number of seconds that each worker thread will wait
+            between polls to the conductor server. By default,
+            polling_interval is set to 1.0
+        domain: str, optional
+            The domain of the task under which the worker will run. For
+            further details refer to the conductor server documentation
+            By default, it is set to None
+        """
         wfcMgr = WFClientMgr(server_url)
         self.workflowClient = wfcMgr.workflowClient
         self.taskClient = wfcMgr.taskClient
@@ -54,6 +91,29 @@ class ConductorWorker:
                     self.execute(polled, exec_function)
 
     def start(self, taskType, exec_function, wait, domain=None):
+        """
+        start begins the continuous polling of the conductor server
+
+        Parameters
+        ----------
+        taskType: str
+            The name of the task that the worker is looking to execute
+        exec_function: function
+            The function that the worker will execute. The function
+            must return a dict with the `status`, `output` and `logs`
+            keys present. If this is not present, an Exception will be
+            raised
+        wait: bool
+            Whether the worker will block execution of further code.
+            If multiple workers are being called from the same program,
+            all but the last start call but have wait set to False. The
+            last start call must have wait set to True. If only a
+            single worker is being called, wait must be set to True
+        domain: str, optional
+            The domain of the task under which the worker will run. For
+            further details refer to the conductor server documentation
+            By default, it is set to None
+        """
         print('Polling for task %s at a %f ms interval with %d threads for task execution, with worker id as %s' % (taskType, self.polling_interval * 1000, self.thread_count, self.worker_id))
         for x in range(0, int(self.thread_count)):
             thread = Thread(target=self.poll_and_execute, args=(taskType, exec_function, domain,))
