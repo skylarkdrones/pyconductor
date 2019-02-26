@@ -63,7 +63,7 @@ class ConductorWorker:
             while 1:
                 time.sleep(1)
 
-    def consume(self, taskType, exec_function, limit=0, check_existing_tasks=True):
+    def consume(self, taskType, exec_function, domain=None, limit=0, check_existing_tasks=True):
         """
         If we don't want to set up a continously polling worker,
         then we might want to use consume. It checks if the task
