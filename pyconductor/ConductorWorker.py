@@ -48,14 +48,12 @@ class ConductorWorker:
         server_url: str
             The url to the server hosting the conductor api.
             Ex: 'http://localhost:8080/api'
-        thread_count: int, optional
+        thread_count: int
             The number of threads that will be polling for and
-            executing tasks in case of using the start method. By
-            default, thread_count is set to 1
-        polling_interval: float, optional
+            executing tasks in case of using the start method.
+        polling_interval: float
             The number of seconds that each worker thread will wait
-            between polls to the conductor server. By default,
-            polling_interval is set to 1.0
+            between polls to the conductor server.
         domain: str, optional
             The domain of the task under which the worker will run. For
             further details refer to the conductor server documentation
