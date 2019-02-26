@@ -23,7 +23,7 @@ hostname = socket.gethostname()
 
 
 class ConductorWorker:
-    def __init__(self, server_url, thread_count, polling_interval, worker_id=None):
+    def __init__(self, server_url, thread_count=1, polling_interval=1, worker_id=None):
         wfcMgr = WFClientMgr(server_url)
         self.workflowClient = wfcMgr.workflowClient
         self.taskClient = wfcMgr.taskClient
@@ -75,6 +75,7 @@ class ConductorWorker:
 
         limit and check_existing_tasks are not yet supported
         """
+        threads_created = []
         while True:
             polled = self.taskClient.pollForTask(taskType, self.worker_id, domain)
             if polled is None:
@@ -82,7 +83,11 @@ class ConductorWorker:
             if self.taskClient.ackTask(polled['taskId'], self.worker_id):
                 thread = Thread(target=self.execute, args=(polled, exec_function,))
                 thread.daemon = True
+                threads_created.append(thread)
                 thread.start()
+        while any(thread.is_alive() for thread in threads_created):
+            print('threads are alive')
+            time.sleep(1)
 
 
 def exc(taskType, inputData, startTime, retryCount, status, callbackAfterSeconds, pollCount):
