@@ -63,6 +63,27 @@ class ConductorWorker:
             while 1:
                 time.sleep(1)
 
+    def consume(self, taskType, exec_function, limit=0, check_existing_tasks=True):
+        """
+        If we don't want to set up a continously polling worker,
+        then we might want to use consume. It checks if the task
+        is available. If available, it spawns threads to complete
+        the task. If not, it ends. This allows different usage
+        patterns, like ensuring that one system is only processing
+        one task at a time. Using this also allows for easy updates
+        to the worker code.
+
+        limit and check_existing_tasks are not yet supported
+        """
+        while True:
+            polled = self.taskClient.pollForTask(taskType, self.worker_id, domain)
+            if polled is None:
+                break
+            if self.taskClient.ackTask(polled['taskId'], self.worker_id):
+                thread = Thread(target=self.execute, args=(polled, exec_function,))
+                thread.daemon = True
+                thread.start()
+
 
 def exc(taskType, inputData, startTime, retryCount, status, callbackAfterSeconds, pollCount):
     print('Executing the function')
