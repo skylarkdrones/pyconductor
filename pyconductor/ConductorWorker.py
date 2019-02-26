@@ -48,7 +48,7 @@ class ConductorWorker:
         server_url: str
             The url to the server hosting the conductor api.
             Ex: 'http://localhost:8080/api'
-        thread_count: in
+        thread_count: int
             The number of threads that will be polling for and
             executing tasks in case of using the start method.
         polling_interval: float
