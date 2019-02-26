@@ -15,11 +15,16 @@
 #
 from setuptools import setup
 
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
 setup(
   name = 'pyconductor',
   packages = ['pyconductor'], # this must be the same as the name above
-  version = '0.1.2',
+  version = '0.1.3',
   description = 'Conductor python client',
+  long_description=long_description,
+  long_description_content_type="text/markdown",
   author = 'Samarth Hattangady',
   author_email = 'samhattangady@gmail.com',
   url = 'https://github.com/skylarkdrones/pyconductor',
