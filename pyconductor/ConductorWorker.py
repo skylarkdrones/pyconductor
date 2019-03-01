@@ -54,10 +54,9 @@ class ConductorWorker:
         polling_interval: float
             The number of seconds that each worker thread will wait
             between polls to the conductor server.
-        domain: str, optional
-            The domain of the task under which the worker will run. For
-            further details refer to the conductor server documentation
-            By default, it is set to None
+        workerId: str, optional
+            workerId is the id of the machine that is running the
+            worker. If left blank, it uses the machines hostname.
         """
         wfcMgr = WFClientMgr(server_url)
         self.workflowClient = wfcMgr.workflowClient
